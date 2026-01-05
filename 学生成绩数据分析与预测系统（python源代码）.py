@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import os
 
+
 # 设置绘图字体（解决中文乱码问题）
 plt.rcParams['font.sans-serif'] = ['SimHei']
 plt.rcParams['axes.unicode_minus'] = False
