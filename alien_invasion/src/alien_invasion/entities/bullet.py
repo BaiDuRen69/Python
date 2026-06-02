@@ -10,10 +10,19 @@ class Bullet(Sprite):
         super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
-        self.color = self.settings.bullet_color
+        self.screen_rect = ai_game.screen.get_rect()
+
+        # 加载飞船图像并获取其外接矩形
+        self.image = pygame.image.load('images/子弹.png')
+        # 调整飞船大小（设置为屏幕宽度的1/20）
+        ship_width = self.settings.screen_width // 40
+        ship_height = int(self.image.get_height() * (ship_width / self.image.get_width()))
+        self.image = pygame.transform.scale(self.image, (ship_width, ship_height))
+
+        self.rect = self.image.get_rect()
 
         # 在(0,0)处创建一个表示子弹的矩形，再设置正确的位置
-        self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
+        # self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
         self.rect.midtop = ai_game.ship.rect.midtop
 
         # 存储用浮点数表示的子弹位置
@@ -28,4 +37,4 @@ class Bullet(Sprite):
 
     def draw_bullet(self):
         """在屏幕上绘制子弹"""
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        self.screen.blit(self.image, self.rect)

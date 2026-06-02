@@ -1,15 +1,17 @@
 import sys
+import os
+from pathlib import Path
 from time import sleep
 
 import pygame
 
-import settings
-import ship
-from game_stats import GameStats
-from bullet import Bullet
-from alien import Alien
-from button import Button
-from scoreboard import Scoreboard
+from . import settings
+from .entities import ship
+from .game.stats import GameStats
+from .entities.bullet import Bullet
+from .entities.alien import Alien
+from .ui.button import Button
+from .game.scoreboard import Scoreboard
 
 
 class AlienInvasion:
@@ -17,6 +19,22 @@ class AlienInvasion:
 
     def __init__(self):
         """初始化游戏并创建游戏资源"""
+        # 设置资源路径（兼容打包后的环境）
+        if getattr(sys, 'frozen', False):
+            # 打包后的环境：exe 所在目录或 _internal 目录
+            if hasattr(sys, '_MEIPASS'):
+                # PyInstaller 单文件模式的临时目录
+                self.base_path = Path(sys._MEIPASS)
+            else:
+                # 文件夹模式：exe 所在目录
+                self.base_path = Path(sys.executable).parent
+        else:
+            # 开发环境：项目根目录
+            self.base_path = Path(__file__).parent.parent.parent
+        
+        # 切换到资源目录
+        os.chdir(self.base_path)
+
         # 初始化背景
         pygame.init()
         # 创建时钟对象，用于控制游戏帧率
@@ -48,7 +66,7 @@ class AlienInvasion:
         self.game_active = False
 
         # 创建开始按钮
-        self.play_button = Button(self, "Play")
+        self.play_button = Button(self)
 
     def run_game(self):
         """开始游戏的主循环"""
@@ -263,7 +281,4 @@ class AlienInvasion:
         self.sb.prep_ships()
 
 
-if __name__ == '__main__':
-    # 创建游戏实例并运行游戏
-    ai = AlienInvasion()
-    ai.run_game()
+

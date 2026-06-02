@@ -1,7 +1,7 @@
 import pygame.font
 from pygame.sprite import Group
 
-from ship import Ship
+from alien_invasion.src.alien_invasion.entities.ship import Ship
 
 
 class Scoreboard:
