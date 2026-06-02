@@ -93,7 +93,7 @@ class AlienInvasion:
                 sys.exit()
             elif event.key == pygame.K_SPACE:
                 self._fire_bullet()
-            elif event.key==pygame.K_r:
+            elif event.key == pygame.K_r:
                 self._start_game()
 
     def _check_keyup_events(self, event):
@@ -107,7 +107,7 @@ class AlienInvasion:
 
     def _check_play_button(self, mouse_pos):
         """在玩家单机Play按钮时开始新游戏"""
-        button_clicked=self.play_button.rect.collidepoint(mouse_pos)
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
             # 还原游戏设置
             self._start_game()
@@ -261,8 +261,6 @@ class AlienInvasion:
         self.sb.prep_score()
         self.sb.prep_level()
         self.sb.prep_ships()
-
-
 
 
 if __name__ == '__main__':
