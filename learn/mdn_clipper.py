@@ -229,9 +229,12 @@ def scan_lines(content: str, url: str, s) -> str:
 def create_markdowm(content: str, title: str):
     """将文本内容保存为Markdown"""
     title = re.sub(r'[\\/:*?"<>|]', '_', title)
-    with open(f"{title}.md", "w", encoding="utf-8") as f:
+    base_dir = Path(r"D:\programme\GitHub\Markdown\HTML")
+    # 确保目录存在（如果不存在则自动创建）
+    base_dir.mkdir(parents=True, exist_ok=True)
+    file_path = base_dir / f"{title}.md"
+    with open(file_path, "w", encoding="utf-8") as f:
         f.write(content)
-
 
 
 
